@@ -27,7 +27,7 @@ class App extends React.Component {
 			})
 			.catch(error => {
 				console.log(error);
-			})
+			});
 		
 		axios.get(`https://api.github.com/users/${this.state.username}/followers`)
 			.then(response => {
@@ -37,31 +37,30 @@ class App extends React.Component {
 			})
 			.catch(error => {
 				console.log(error);
-			})
+			});
 	}
 
 	componentDidUpdate(prevProps, prevState) {
 		if (prevState.username !== this.state.username) {
 			axios.get(`https://api.github.com/users/${this.state.username}`)
-			.then(response => {
-				this.setState({
-					userData: response.data
-				})
-			})
-			.catch(error => {
-				console.log(error);
-			})
-
-			axios.get(`https://api.github.com/users/${this.state.userName}/followers`)
 				.then(response => {
-					console.log('followers were fetched');
+					this.setState({
+						userData: response.data
+					})
+				})
+				.catch(error => {
+					console.log(error);
+				});
+
+			axios.get(`https://api.github.com/users/${this.state.username}/followers`)
+				.then(response => {
 					this.setState({
 						followerData: response.data
 					})
 				})
 				.catch(error => {
 					console.log(error);
-				})
+				});
 		}
 	}
 
