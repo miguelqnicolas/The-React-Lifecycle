@@ -9,15 +9,11 @@ const Card = props => {
         justify-content: center;
     `
 
-    const Followers = styled.div`
-    
-    `
-
     const User = styled.div`
         width: 272px;
+        margin-right: 40px;
         display: flex;
         flex-direction: column;
-        justify-content: center;
         
         .image-container {
             height: 272px;
@@ -100,6 +96,52 @@ const Card = props => {
         }
     `
 
+    const Followers = styled.div`
+        h2 {
+            padding: 16px 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .follower-container {
+            width: 928px;
+            padding: 24px 0px;
+            border-top: 1px solid lightgray;
+            display: flex;
+            justify-content: space-between;
+            
+            div {
+                display: flex;
+            }
+
+            div img {
+                height: 50px;
+                width: 50px;
+                margin-right: 28px;
+                border-radius: 3px;
+            }
+
+            div p {
+                font-size: 16px;
+            }
+
+            a button {
+                height: 28px;
+                width: 57.72px;
+                border: 1px solid lightgray;
+                border-radius: 3px;
+                font-family: 'Quicksand', sans-serif;
+                font-size: 12px;
+                font-weight: 500;
+                cursor: pointer;
+
+                :hover {
+                    border: 1px solid gray;    
+                }
+            }
+        }
+    `
+
     // how would i implement css reset?
     
     return (
@@ -122,8 +164,17 @@ const Card = props => {
                 </div>
             </User>
             <Followers>
+                <h2>Followers</h2>
                 {props.followerData.map((item, index) => {
-                    return <p key={index}>{item.login}</p>
+                    return (
+                        <div className='follower-container' key={index}>
+                            <div>
+                                <img src={item.avatar_url} alt='avatar'></img>
+                                <p key={index}>{item.login}</p>
+                            </div>
+                            <a href={item.html_url} target='_blank'><button>Follow</button></a>
+                        </div>
+                    )
                 })}
             </Followers>
         </Container>
