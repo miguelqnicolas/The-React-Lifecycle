@@ -1,8 +1,7 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 
-const Header = () => {
-    const Header = styled.div`
+const Nav = styled.div`
         height: 64px;
         background: #24292E;
         display: flex;
@@ -28,14 +27,27 @@ const Header = () => {
             color: white;
         }
     `
-    
+
+const Header = props => {
+    const [input, setInput] = useState('');
+
+    const onChange = event => {
+        setInput(event.target.value);
+    }
+
+    const onSubmit = event => {
+        event.preventDefault();
+        props.helperFunction(input);
+        setInput('');
+    }
+
     return (
-        <Header>
+        <Nav>
             <i className="fab fa-github"></i>
-            <form>
-                <input placeholder='GitHub Username'/>    
+            <form onSubmit={onSubmit}>
+                <input name='input' type='text' placeholder='GitHub Username' value={input} onChange={onChange}/>   
             </form>
-        </Header>
+        </Nav>
     )
 };
 

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const Card = props => {
     
     const Container = styled.div`
-        margin-top: 24px;
+        margin: 24px 0px;
         display: flex;
         justify-content: center;
     `
@@ -97,10 +97,26 @@ const Card = props => {
     `
 
     const Followers = styled.div`
-        h2 {
+        .follower-header {
+            width: 101.69px;
             padding: 16px 8px;
-            font-size: 14px;
-            font-weight: 500;
+            border-bottom: 1px solid #e36209;
+            display: flex;
+            align-items: center;
+
+            h2 {
+                margin-right: 3px;
+                font-size: 14px;
+                font-weight: 600;
+            }
+
+            p {
+                padding: 2px 5px;
+                background: lightgray;
+                border-radius: 50%;
+                font-size: 12px;
+                font-weight: 500;
+            }
         }
 
         .follower-container {
@@ -141,8 +157,6 @@ const Card = props => {
             }
         }
     `
-
-    // how would i implement css reset?
     
     return (
         <Container>
@@ -164,7 +178,10 @@ const Card = props => {
                 </div>
             </User>
             <Followers>
-                <h2>Followers</h2>
+                <div className='follower-header'>
+                    <h2>Followers</h2>
+                    <p>{props.followerData.length}</p>
+                </div>
                 {props.followerData.map((item, index) => {
                     return (
                         <div className='follower-container' key={index}>

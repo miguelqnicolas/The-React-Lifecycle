@@ -7,13 +7,19 @@ class App extends React.Component {
 	constructor() {
 		super();
 		this.state = {
+			username: 'miguelqnicolas',
 			userData: {},
-			followerData: []
+			followerData: [],
+			input: ''
 		}
 	}
 
+	helperFunction = item => {
+		this.setState({username: item});
+	}
+
 	componentDidMount() {
-		axios.get('https://api.github.com/users/miguelqnicolas')
+		axios.get(`https://api.github.com/users/${this.state.username}`)
 			.then(response => {
 				this.setState({
 					userData: response.data
@@ -23,9 +29,8 @@ class App extends React.Component {
 				console.log(error);
 			})
 		
-		axios.get('https://api.github.com/users/miguelqnicolas/followers')
+		axios.get(`https://api.github.com/users/${this.state.username}/followers`)
 			.then(response => {
-				console.log(response);
 				this.setState({
 					followerData: response.data
 				})
@@ -35,10 +40,35 @@ class App extends React.Component {
 			})
 	}
 
+	componentDidUpdate(prevProps, prevState) {
+		if (prevState.username !== this.state.username) {
+			axios.get(`https://api.github.com/users/${this.state.username}`)
+			.then(response => {
+				this.setState({
+					userData: response.data
+				})
+			})
+			.catch(error => {
+				console.log(error);
+			})
+
+			axios.get(`https://api.github.com/users/${this.state.userName}/followers`)
+				.then(response => {
+					console.log('followers were fetched');
+					this.setState({
+						followerData: response.data
+					})
+				})
+				.catch(error => {
+					console.log(error);
+				})
+		}
+	}
+
 	render() {
 		return (
 			<>
-				<Header/>
+				<Header helperFunction={this.helperFunction}/>
 				<Card userData={this.state.userData} followerData={this.state.followerData}/>
 			</>
 		)
